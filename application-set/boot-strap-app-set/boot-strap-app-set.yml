@@ -9,7 +9,7 @@ spec:
       repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git
       revision: HEAD
       directories:
-      - path: application-sets/boot-strap-apps/*
+      - path: application-set/boot-strap-apps/*
   template:      
     metadata:
       name: '{{path.basename}}'
