@@ -126,6 +126,12 @@ echo1
 
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/echo_2_image.png)
 
+
+## Installing and Configuring Cert-Manager
+ install v1.7.1 of cert-manager into our cluster. cert-manager is a Kubernetes add-on that provisions TLS certificates from Let’s Encrypt and other certificate authorities (CAs) and manages their lifecycles. Certificates can be automatically requested and configured by annotating Ingress Resources, appending a tls section to the Ingress spec, and configuring one or more Issuers or ClusterIssuers to specify your preferred certificate authority. To learn more about Issuer and ClusterIssuer objects, consult the official cert-manager documentation on [Issuers](https://cert-manager.io/docs/concepts/issuer/).
+
+Install cert-manager and its [Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) (CRDs) like Issuers and ClusterIssuers by following the official [installation instructions](https://cert-manager.io/docs/installation/kubernetes/). Note that a namespace called cert-manager will be created into which the cert-manager objects will be created:
+
 ## To delete argoCD app:
 
 ```
