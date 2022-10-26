@@ -97,13 +97,37 @@ argocd app create test-apps --project default --sync-policy none --sync-option C
      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
 ```
 
+
+
 ## Manage DNS record for http-echo:
 
 Please use your own Cloud environment and Manage DNS record to point DomainName to `ingress-nginx` external load balancer
 o test the Ingress, navigate to your DNS management service and create A records for echo1.example.com and echo2.example.com pointing to the DigitalOcean Load Balancer’s external IP. The Load Balancer’s external IP is the external IP address for the ingress-nginx Service, which we fetched in the previous step. If you are using DigitalOcean to manage your domain’s DNS records, consult  [How to Manage DNS Records](https://www.digitalocean.com/docs/networking/dns/how-to/manage-records/) to learn how to create A records.
 
+To find `ingress-nginx` external load balancer. Create Record to point *.bijubayarea.tk to LB of ngress-nginx-controller
+```
+$ kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+afd597bb1a7d54c099cee24475938458-1587408250.us-west-2.elb.amazonaws.com
+```
 
-To delete argoCD app
+![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/Route53_config.png)
+
+Once you’ve created the necessary echo1.example.com and echo2.example.com DNS records, you can test the Ingress Controller and Resource you’ve created using the curl command line utility or browser http://echo1.bijubayarea.tk  (TLS to be added below)
+
+
+
+```
+curl echo1.bijubayarea.tk
+
+Output
+echo1
+```
+![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/echo_1_image.png)
+
+![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/echo_2_image.png)
+
+## To delete argoCD app:
+
 ```
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "ClusterIP"}}'
 argocd app delete boot-strap
