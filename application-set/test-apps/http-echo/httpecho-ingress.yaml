@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echo-ingress
+  namespace: httpecho
+spec:
+  rules:
+  - host: echo1.bijubayarea.tk
+    http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: echo1
+              port:
+                number: 80
+  - host: echo2.bijubayarea.tk
+    http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: echo2
+              port:
+                number: 80
