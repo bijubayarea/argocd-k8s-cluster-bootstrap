@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: echo-ingress
   namespace: http-echo
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: echo1.bijubayarea.tk
