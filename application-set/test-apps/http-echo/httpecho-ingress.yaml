@@ -5,7 +5,7 @@ metadata:
   namespace: http-echo
 spec:
   rules:
-  - host: echo1.bijubayarea.tk
+  - host: echo1.k8s.bijubayarea.tk
     http:
         paths:
         - pathType: Prefix
@@ -15,7 +15,7 @@ spec:
               name: echo1
               port:
                 number: 80
-  - host: echo2.bijubayarea.tk
+  - host: echo2.k8s.bijubayarea.tk
     http:
         paths:
         - pathType: Prefix
