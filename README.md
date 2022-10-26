@@ -59,9 +59,9 @@ This will install ingress-controller and cert-manager
       - path: application-sets/boot-strap-apps/*
 
 ```
-Install the App-set
+Install the App-set either using following ARGO CLI or from  web interface from LB `(581f61c66fa5407d8e6d89c12c1e479-1081541614.us-west-2.elb.amazonaws.com)`
 ```
-argocd app create example01 --project default --sync-policy none --sync-option CreateNamespace=true \
+argocd app create boot-strap --project default --sync-policy none --sync-option CreateNamespace=true \
      --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
      --path ./application-set/boot-strap-app-set/  \
      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
