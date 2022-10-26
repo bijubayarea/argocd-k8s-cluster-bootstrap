@@ -26,7 +26,12 @@ By default argocd-server is not publicaly exposed.  we will use a Load Balancer 
 ```
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 Wait about 2 minutes for the LoadBalancer creation
-export ARGOCD_SERVER=`kubectl get svc argocd-server -n argocd -o json | jq --raw-output '.status.loadBalancer.ingress[0].hostname'`
+
+export ARGOCD_SERVER=`kubectl get svc argocd-server -n argocd -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'`
+
+
+
+
 
 ```
 
@@ -43,7 +48,7 @@ You should get as an output:
 'admin'logged insuccessfully
 ```
 
-## Deploy ArgoCD App-set : 
+## Deploy ArgoCD App-set (`boot-strap-app-set`) for Ingress-Controller: 
 
 boot-strap-apps from github repo : `repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git`
 
@@ -67,6 +72,49 @@ argocd app create boot-strap --project default --sync-policy none --sync-option 
      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
 ```
 
+## Deploy ArgoCD App-set (`httpecho-app-set`) for test http-echo: 
+
+See app-set at `repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git/application-set/boot-strap-app-set/boot-strap-app-set.yaml`
+
+This will install 2 deployments echo1 and echo2. Please see `https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/application-set/test-apps/http-echo`
+
+```
+ - git:
+      repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git
+      revision: HEAD
+      directories:
+      - path: application-sets/test-apps/*
+
+```
+Install the App-set either using following ARGO CLI or from  web interface 
+from LB `(581f61c66fa5407d8e6d89c12c1e479-1081541614.us-west-2.elb.amazonaws.com)`
+App-set provisions : namespace, deployment, service and ingress
+
+```
+argocd app create test-apps --project default --sync-policy none --sync-option CreateNamespace=true \
+     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
+     --path ./application-set/test-app-set/  \
+     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
+```
+
+## Manage DNS record for http-echo:
+
+Please use your own Cloud environment and Manage DNS record to point DomainName to `ingress-nginx` external load balancer
+o test the Ingress, navigate to your DNS management service and create A records for echo1.example.com and echo2.example.com pointing to the DigitalOcean Load Balancer’s external IP. The Load Balancer’s external IP is the external IP address for the ingress-nginx Service, which we fetched in the previous step. If you are using DigitalOcean to manage your domain’s DNS records, consult  [How to Manage DNS Records](https://www.digitalocean.com/docs/networking/dns/how-to/manage-records/) to learn how to create A records.
+
+
+To delete argoCD app
+```
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "ClusterIP"}}'
+argocd app delete boot-strap
+argocd app delete test-apps
+
+```
+
+
+```
+
+```
 
 ```
 
