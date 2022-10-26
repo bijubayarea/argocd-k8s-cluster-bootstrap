@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: echo-ingress
-  namespace: httpecho
+  namespace: http-echo
 spec:
   rules:
   - host: echo1.bijubayarea.tk

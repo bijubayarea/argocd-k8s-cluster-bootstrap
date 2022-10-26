@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echo1
+  namespace: http-echo
 spec:
   selector:
     matchLabels:
@@ -27,6 +28,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: echo2
+  namespace: http-echo
 spec:
   selector:
     matchLabels:
