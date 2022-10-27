@@ -5,6 +5,9 @@
 - [Deploy S3 backend for terraform state](https://github.com/bijubayarea/test-terraform-s3-remote-state)
 - [Deploy EKS Cluster with 4 SPOT instances](https://github.com/bijubayarea/test-terraform-eks-cluster)
 
+## Final Goal
+
+![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/ingress-tls.png)
 
 ## Deploy argoCD
 
