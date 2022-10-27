@@ -9,7 +9,12 @@ spec:
       repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git
       revision: HEAD
       directories:
-      - path: application-set/boot-strap-apps/*
+      - path: application-set/boot-strap-apps/ingress-nginx
+  - git:
+      repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git
+      revision: HEAD
+      directories:
+      - path: application-set/boot-strap-apps/cert-manager
   template:      
     metadata:
       name: '{{path.basename}}'
