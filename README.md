@@ -1,6 +1,6 @@
 # argocd-k8s-cluster-bootstrap
 
-## Deploy k8s Infra
+## Pre-setup - Deploy k8s Infra
 
 - [Deploy S3 backend for terraform state](https://github.com/bijubayarea/test-terraform-s3-remote-state)
 - [Deploy EKS Cluster with 4 SPOT instances](https://github.com/bijubayarea/test-terraform-eks-cluster)
@@ -75,42 +75,18 @@ This will install ingress-controller and cert-manager
 ```
 Install the App-set either using following ARGO CLI or from  web interface from LB `(581f61c66fa5407d8e6d89c12c1e479-1081541614.us-west-2.elb.amazonaws.com)`
 ```
-argocd app create boot-strap --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
+
+argocd app create boot-strap --project default --sync-policy none --sync-option CreateNamespace=true \
      --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
      --path ./application-set/boot-strap-app-set/  \
      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
-```
 
-## Deploy ArgoCD App-set (`httpecho-app-set`) for test http-echo: 
-
-See app-set at `repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git/application-set/boot-strap-app-set/boot-strap-app-set.yaml`
-
-This will install 2 deployments echo1 and echo2. Please see `https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/application-set/test-apps/http-echo`
+#argocd app create boot-strap --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
+#     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
+#     --path ./application-set/boot-strap-app-set/  \
+#     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
 
 ```
- - git:
-      repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git
-      revision: HEAD
-      directories:
-      - path: application-sets/test-apps/*
-
-```
-Install the App-set either using following ARGO CLI or from  web interface 
-from LB `(581f61c66fa5407d8e6d89c12c1e479-1081541614.us-west-2.elb.amazonaws.com)`
-App-set provisions : namespace, deployment, service and ingress
-
-```
-argocd app create test-apps --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
-     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
-     --path ./application-set/test-app-set/  \
-     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
-```
-
- ArgoCD UI display
-
- ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/argocd_snapshot.png)
-
-
 ## Manage DNS record for http-echo:
 
 Please use your own Cloud environment and Manage DNS record to point DomainName to `ingress-nginx` external load balancer
@@ -139,6 +115,45 @@ echo1
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/echo_1_image.png)
 
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/echo_2_image.png)
+
+
+
+## Deploy ArgoCD App-set (`httpecho-app-set`) for test http-echo: 
+
+See app-set at `repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git/application-set/boot-strap-app-set/boot-strap-app-set.yaml`
+
+This will install 2 deployments echo1 and echo2. Please see `https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/application-set/test-apps/http-echo`
+
+```
+ - git:
+      repoURL: https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git
+      revision: HEAD
+      directories:
+      - path: application-sets/test-apps/*
+
+```
+Install the App-set either using following ARGO CLI or from  web interface 
+from LB `(581f61c66fa5407d8e6d89c12c1e479-1081541614.us-west-2.elb.amazonaws.com)`
+App-set provisions : namespace, deployment, service and ingress
+
+```
+
+argocd app create test-apps --project default --sync-policy none --sync-option CreateNamespace=true \
+     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
+     --path ./application-set/test-app-set/  \
+     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
+
+#argocd app create test-apps --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
+#     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
+#     --path ./application-set/test-app-set/  \
+#     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
+
+```
+
+ ArgoCD UI display
+
+ ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/argocd_snapshot.png)
+
 
 
 ## Installing and Configuring Cert-Manager
@@ -388,9 +403,19 @@ You also secured the Ingress by installing the cert-manager certificate provisio
 Use either argocd CLI or argoCd GUI to delete infra
 
 ```
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "ClusterIP"}}'
-argocd app delete boot-strap
 argocd app delete test-apps
+argocd app delete boot-strap
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "ClusterIP"}}'
+
+kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml
+kubectl delete namespace argocd
+
+
+```
+
+```
+terraform destroy test-terraform-eks-cluster
+terraform destroy test-terraform-s3-remote-state
 
 ```
 
