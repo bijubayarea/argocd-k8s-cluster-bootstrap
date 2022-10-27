@@ -1,0 +1,12 @@
+
+# ============================================================================ #
+#                  C e r t   M a n a g e r   N a m e s p a c e
+# ============================================================================ #
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+  labels:
+    goldilocks.fairwinds.com/enabled: "true"
