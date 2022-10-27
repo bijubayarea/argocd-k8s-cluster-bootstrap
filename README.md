@@ -1,5 +1,11 @@
 # argocd-k8s-cluster-bootstrap
 
+## Deploy k8s Infra
+
+- [Deploy S3 backend for terraform state](https://github.com/bijubayarea/test-terraform-s3-remote-state)
+- [Deploy EKS Cluster with 4 SPOT instances](https://github.com/bijubayarea/test-terraform-eks-cluster)
+
+
 ## Deploy argoCD
 
 Install Argo CD
@@ -97,9 +103,9 @@ argocd app create test-apps --project default --sync-policy none --sync-option C
      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
 ```
 
-ArgoCD UI display
+ ArgoCD UI display
 
-![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/argocd_snapshot.png)
+ ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/argocd_snapshot.png)
 
 
 ## Manage DNS record for http-echo:
@@ -353,6 +359,11 @@ Browser verifies CA authority - letsencrypt
 
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/http-echo-secure_connection_2.png)
 
+
+## Conclusion
+
+In this guide, you set up an Nginx Ingress to load balance and route external requests to backend Services inside of your Kubernetes cluster. 
+You also secured the Ingress by installing the cert-manager certificate provisioner and setting up a Let’s Encrypt certificate for two host paths.
 
 ## To delete argoCD app:
 
