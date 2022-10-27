@@ -124,7 +124,9 @@ afd597bb1a7d54c099cee24475938458-1587408250.us-west-2.elb.amazonaws.com
 
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/Route53_config.png)
 
-Once you’ve created the necessary echo1.example.com and echo2.example.com DNS records, you can test the Ingress Controller and Resource you’ve created using the curl command line utility or browser http://echo1.bijubayarea.tk  (TLS to be added below)
+Once you’ve created the necessary echo1.example.com and echo2.example.com DNS records, you can test the Ingress Controller and Resource you’ve created using the curl command line utility or browser http://echo1.bijubayarea.tk .
+
+There is no TLS encrytion here, TLS to be added below.
 
 
 
@@ -369,6 +371,8 @@ personal-website-deployment.yaml
 personal-website-ingress.yaml  
 personal-website-namespace.yaml  
 personal-website-service.yaml
+
+https://https://website.bijubayarea.tk/
 
 ```
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/personal_website_tls.png)
