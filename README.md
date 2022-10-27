@@ -12,8 +12,11 @@
 ## ** VERY IMPORTANT **
 ** VERY IMPORTANT **
 ** VERY IMPORTANT **
-- argoCD app-set for "boot-strap" :  auto synch should disabled
-- First sych "ingress-nginx" app, wait 2 mins, then synch "cert-manager"
+- argoCD app-set (boot-strap) auto synch should disabled
+- First sych "ingress-nginx" app, wait 2 mins, 
+- wait for ingress-controller's load balanacer  to come up  
+- update AWS Route53 A record "website.bijubayarea.tk" with ingress-controller's load balanacer
+- synch "cert-manager"
 
 cert-manger should be brought up only after nginx-ingress controller.
 
@@ -85,12 +88,15 @@ Install the App-set either using following ARGO CLI or from  web interface from 
 
 ** VERY IMPORTANT **
 ** VERY IMPORTANT **
-- argoCD app-set auto synch should disabled
-- First sych "ingress-nginx" app, wait 2 mins, then synch "cert-manager"
+- argoCD app-set (boot-strap) auto synch should disabled
+- First sych "ingress-nginx" app, wait 2 mins, 
+- wait for ingress-controller's load balanacer  to come up  
+- update AWS Route53 A record "website.bijubayarea.tk" with ingress-controller's load balanacer
+- synch "cert-manager"
 
 ```
 
-argocd app create boot-strap --project default --sync-policy none --sync-option CreateNamespace=true \
+argocd app create boot-strap --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
      --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
      --path ./application-set/boot-strap-app-set/  \
      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
