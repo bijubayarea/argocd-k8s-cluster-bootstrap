@@ -98,6 +98,7 @@ argocd app create test-apps --project default --sync-policy none --sync-option C
 ```
 
 ArgoCD UI display
+
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/argocd_snapshot.png)
 
 
