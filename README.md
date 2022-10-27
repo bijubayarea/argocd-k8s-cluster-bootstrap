@@ -362,6 +362,17 @@ Browser verifies CA authority - letsencrypt
 
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/http-echo-secure_connection_2.png)
 
+After adding a personal website in 
+```
+$ ls application-set/test-apps/website/
+personal-website-deployment.yaml  
+personal-website-ingress.yaml  
+personal-website-namespace.yaml  
+personal-website-service.yaml
+
+```
+![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/argocd_snapshot.png)
+
 
 ## Conclusion
 
