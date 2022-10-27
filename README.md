@@ -371,7 +371,7 @@ personal-website-namespace.yaml
 personal-website-service.yaml
 
 ```
-![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/argocd_snapshot.png)
+![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/personal_website_tls.png)
 
 
 ## Conclusion
