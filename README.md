@@ -9,6 +9,14 @@
 
 ![](https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap/blob/main/images/ingress-tls.png)
 
+## ** VERY IMPORTANT **
+** VERY IMPORTANT **
+** VERY IMPORTANT **
+- argoCD app-set for "boot-strap" :  auto synch should disabled
+- First sych "ingress-nginx" app, wait 2 mins, then synch "cert-manager"
+
+cert-manger should be brought up only after nginx-ingress controller.
+
 ## Deploy argoCD
 
 Install Argo CD
@@ -74,6 +82,12 @@ This will install ingress-controller and cert-manager
 
 ```
 Install the App-set either using following ARGO CLI or from  web interface from LB `(581f61c66fa5407d8e6d89c12c1e479-1081541614.us-west-2.elb.amazonaws.com)`
+
+** VERY IMPORTANT **
+** VERY IMPORTANT **
+- argoCD app-set auto synch should disabled
+- First sych "ingress-nginx" app, wait 2 mins, then synch "cert-manager"
+
 ```
 
 argocd app create boot-strap --project default --sync-policy none --sync-option CreateNamespace=true \
@@ -81,10 +95,6 @@ argocd app create boot-strap --project default --sync-policy none --sync-option 
      --path ./application-set/boot-strap-app-set/  \
      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
 
-#argocd app create boot-strap --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
-#     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
-#     --path ./application-set/boot-strap-app-set/  \
-#     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
 
 ```
 ## Manage DNS record for http-echo:
@@ -138,15 +148,10 @@ App-set provisions : namespace, deployment, service and ingress
 
 ```
 
-argocd app create test-apps --project default --sync-policy none --sync-option CreateNamespace=true \
-     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
-     --path ./application-set/test-app-set/  \
-     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
-
-#argocd app create test-apps --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
-#     --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
-#     --path ./application-set/test-app-set/  \
-#     --dest-server https://kubernetes.default.svc --dest-namespace argocd 
+ argocd app create test-apps --project default --sync-policy auto --auto-prune --sync-option CreateNamespace=true \
+      --repo https://github.com/bijubayarea/argocd-k8s-cluster-bootstrap.git \
+      --path ./application-set/test-app-set/  \
+      --dest-server https://kubernetes.default.svc --dest-namespace argocd 
 
 ```
 
